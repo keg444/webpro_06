@@ -7,7 +7,7 @@ app.use("/public", express.static(__dirname + "/public"));
 app.get("/hello1", (req, res) => {
   const message1 = "Hello world";
   const message2 = "Bon jour";
-  res.render('show', { greet1:message1, greet2:message2});
+  res.render('show', { greet1:message1, greet2:message2});//res.render('show')はejsファイルのshowを呼び出す．
 });
 
 app.get("/hello2", (req, res) => {
