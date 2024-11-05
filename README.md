@@ -17,7 +17,6 @@ console.log('Hello')
 1. `node app5.js`でapp5.jsを起動する
 2. webブラウザでlocalhost:8080/public/janken.htmlにアクセスする
 3. 自分が出したい手を入力する
-4. 
 
 ```mermaid
 flowchart TD;
