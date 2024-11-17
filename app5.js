@@ -27,6 +27,17 @@ app.get("/luck", (req, res) => {
   res.render( 'luck', {number:num, luck:luck} );
 });
 
+app.get("/length", (req, res) => {
+  let str = req.query.str || '';
+  let mojisuu = str.length;
+  // console.log(mojisuu);
+  const display = {
+    mojisuu: mojisuu
+  };
+  res.render( 'length', display );
+});
+
+
 app.get("/janken", (req, res) => {
   let hand = req.query.hand;
   let win = Number( req.query.win ) || 0;
