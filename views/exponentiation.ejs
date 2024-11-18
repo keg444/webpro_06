@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>べき乗</title>
+</head>
+<body>
+    <p><%= num1 %>の<%= num2 %>乗は<%= exp %></p>
+    <hr>
+    <form action="/exponentiation" method="get">
+        <input type="number" name="num1" required>
+        <label for="num1">底</label>
+        <input type="number" name="num2" required>
+        <label for="num2">指数</label>
+        <input type="submit" values="べき乗">
+    </form>
+</body>
+</html>

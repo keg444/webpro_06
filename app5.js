@@ -19,24 +19,52 @@ app.get("/icon", (req, res) => {
 });
 
 app.get("/luck", (req, res) => {
-  const num = Math.floor( Math.random() * 6 + 1 );
+  const num = Math.random()*6+1; // 1~6の実数の乱数を生成
   let luck = '';
-  if( num==1 ) luck = '大吉';
-  else if( num==2 ) luck = '中吉';
+  if(num<1.0) luck='大吉';
+  else if(num<4.0) luck='吉';
+  else if(num<4.8) luck='中吉';
+  else if(num<5.3) luck='小吉';
+  else if(num<5.8) luck='末吉';
+  else if(num<5.9) luck='凶';
   console.log( 'あなたの運勢は' + luck + 'です' );
   res.render( 'luck', {number:num, luck:luck} );
 });
 
+
+
 app.get("/length", (req, res) => {
-  let str = req.query.str || '';
-  let mojisuu = str.length;
-  // console.log(mojisuu);
+  let str = req.query.str || ''; // 文字がない時(最初)に空白にする
+  let mojisuu = str.length; // 文字数を数える
   const display = {
     mojisuu: mojisuu
   };
   res.render( 'length', display );
 });
 
+
+app.get("/exponentiation", (req, res) => {
+  let num1 = Number(req.query.num1) || 0;
+  let num2 = Number(req.query.num2) || 0;
+  let exp = num1 ** num2;
+  const display = {
+    num1: num1,
+    num2: num2,
+    exp: exp
+  };
+  res.render('exponentiation', display);
+});
+
+app.get("/pass", (req, res) => {
+  let num1 = Number(req.query.num1) || 0;
+  let pass = Math.floor(Math.random()* 10**num1-1 + 0);
+  let debug = 10**num1-1;
+  const display = {
+    pass: pass,
+    debug: debug
+  };
+  res.render('pass', display);
+});
 
 app.get("/janken", (req, res) => {
   let hand = req.query.hand;
@@ -49,31 +77,28 @@ app.get("/janken", (req, res) => {
   if( num==1 ) cpu = 'グー';
   else if( num==2 ) cpu = 'チョキ';
   else cpu = 'パー';
-  
+  // 出したてがグーの時の勝敗判定
   if(hand=="グー"){
     if(cpu=='グー') judgement='あいこ';
     else if(cpu=='チョキ') judgement='勝ち';
     else judgement='負け';
   }
-
+  // 出したてがチョキの時の勝敗判定
   if(hand=="チョキ"){
     if(cpu=='グー') judgement='負け';
     else if(cpu=='チョキ') judgement='あいこ';
     else judgement='勝ち';
   }
-
+  // 出したてがパーの時の勝敗判定
   if(hand=="パー"){
     if(cpu=='グー') judgement='勝ち';
     else if(cpu=='チョキ') judgement='負け';
     else judgement='あいこ';
   }
-  // ここに勝敗の判定を入れる
-  // 今はダミーで人間の勝ちにしておく
-  // let judgement = '勝ち';
+
   if(judgement=='勝ち') win += 1;
   total +=1;
-  // win += 1;
-  // total += 1;
+
   const display = {
     your: hand,
     cpu: cpu,
