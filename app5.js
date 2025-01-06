@@ -3,6 +3,7 @@ const app = express();
 
 app.set('view engine', 'ejs');
 app.use("/public", express.static(__dirname + "/public"));
+app.use(express.urlencoded({ extended: true }));
 
 app.get("/hello1", (req, res) => {
   const message1 = "Hello world";
@@ -34,7 +35,7 @@ app.get("/luck", (req, res) => {
 
 
 app.get("/length", (req, res) => {
-  let str = req.query.str || ''; // 文字がない時(最初)に空白にする
+  let str = req.query.str || ''; // 文字がない時(最初)に空白にする→左辺がtrueなら左辺，faulseなら右辺を返す
   let mojisuu = str.length; // 文字数を数える
   const display = {
     mojisuu: mojisuu
