@@ -1,0 +1,75 @@
+\documentclass{jsarticle}
+
+\usepackage[dvipdfmx]{graphicx}
+\usepackage{tabularx}
+\usepackage{booktabs}
+\usepackage[dvipdfmx]{xcolor}
+\usepackage{listings} 
+
+\title{Webプログラミングレポート2 仕様書}
+\author{24G1051 久峩 丈}
+\date{}
+
+\begin{document}
+\maketitle
+\section*{実施内容}
+BBSに3つ以上の機能を追加する
+
+\section*{利用者向け}
+
+\subsection*{手順}
+\begin{enumerate}
+\item ユーザー名とメッセージを入力し，投稿ボタンを押す．
+\item 返信したいときはReplyボタンを押し返信内容を入力し，投稿ボタンを押して返信する．
+\item 投稿チェックボタンで今までの投稿を一覧表示
+\end{enumerate}
+
+
+\section*{管理者向け}
+\begin{enumerate}
+\item ターミナルで$\ldots$/webpro\_06/に移動し node app8.js でサーバを起動する．
+\item Example app listening on port 8080!と表示されたら起動成功．
+\item ブラウザでhttp://localhost:8080/public/bbs.htmlにアクセスし，掲示板(BBS)を起動する．
+\end{enumerate}
+
+\section*{開発者向け}
+\subsection*{追加した機能}
+\begin{itemize}
+    \item 投稿順整理
+    \item 投稿と同時に投稿を一覧表示
+    \item リプライ
+\end{itemize}
+
+\subsection*{投稿チェック}
+\subsubsection*{関数名}
+checkPosts
+\subsubsection*{引数}
+なし
+\subsubsection*{機能}
+入力した文字を掲示板に投稿する
+\subsubsection*{処理}
+\begin{enumerate}
+    \item サーバーが返す投稿数とクライアントの保持投稿数が一致するか確認し，一致したら終了．
+    \item POSTメソッドでURL"/read"にリクエスト送信し，新しい投稿を取得する．
+    \item リプライ用のボタンとテキストボックスを配置する．テキストボックスには\>@{投稿者名}がデフォルトで入力される．
+    \item 入力された名前，メッセージ，投稿順とリプライを表示し，投稿数を更新．
+    \item 処理が成功したら[ 'Name1', 'Message1' ] read $->$ 0 のようにターミナルに出力される．
+    $\cdot$ 投稿するとき（document.querySelector('\#post').addEventListener('click', () =\>  以下）にcheckPostsを呼び出すことで投稿と同時に投稿の一覧を表示する．
+\end{enumerate}
+
+\subsection*{リプライ投稿}
+\subsubsection*{関数名}
+replyToPost
+\subsubsection*{引数}
+postId（リプライ対象），replyMessage（入力したメッセージ），replyElement（リプライ投稿の本体）
+\subsubsection*{機能}
+ユーザの投稿に対してリプライ（返信）メッセージを送信する．
+\subsubsection*{処理}
+\begin{enumerate}
+    \item postIdとreplyMessegeをコンソールに出力する．
+    \item POSTメソッドでURL"/reply"にリクエストを送信する．
+    \item レスポンスがtrueの場合リプライを表示し，falseの場合エラーを出力．
+\end{enumerate}
+
+
+\end{document}  

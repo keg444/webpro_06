@@ -1,12 +1,16 @@
 "use strict";
 const express = require("express");
 const app = express();
+const bodyParser = require('body-parser');
+const posts = [];
 
 let bbs = [];  // 本来はDBMSを使用するが，今回はこの変数にデータを蓄える
+
 
 app.set('view engine', 'ejs');
 app.use("/public", express.static(__dirname + "/public"));
 app.use(express.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get("/hello1", (req, res) => {
   const message1 = "Hello world";
@@ -128,6 +132,18 @@ app.put("/bbs/:id", (req,res) => {
 app.delete("/bbs/:id", (req,res) => {
     console.log( "DELETE /BBS/" + req.params.id );
     res.json( {test: "DELETE /BBS/" + req.params.id });
+});
+
+app.post('/delete', (req, res) => {
+  const postId = req.body.id;  // フロントエンドから送られた投稿IDを取得
+  const postIndex = posts.findIndex(post => post.id === postId);
+
+  if (postIndex > -1) {
+      posts.splice(postIndex, 1);  // 投稿を削除
+      res.json({ success: true });  // 削除成功
+  } else {
+      res.json({ success: false });  // 削除失敗
+  }
 });
 
 app.listen(8080, () => console.log("Example app listening on port 8080!"));
